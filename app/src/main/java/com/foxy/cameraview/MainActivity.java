@@ -44,7 +44,7 @@ import static com.foxy.cameraview.ultis.Constants.FRAGMENT_DIALOG;
 import static com.foxy.cameraview.ultis.Constants.REQUEST_CAMERA_PERMISSION;
 import static com.foxy.cameraview.ultis.Constants.TAG;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback, AspectRatioFragment.Listener{
 
     private Unbinder unbinder;
     private int mCurrentFlash;
@@ -78,13 +78,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void initViews() {
         unbinder = ButterKnife.bind(this);
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//            setSupportActionBar(toolbar);
-//        }
-//        ActionBar actionBar = getSupportActionBar();
-//        if(actionBar != null) {
-//            actionBar.setDisplayHomeAsUpEnabled(false);
-//        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            setSupportActionBar(toolbar);
+        }
+        ActionBar actionBar = getSupportActionBar();
+        if(actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(false);
+        }
     }
 
     @Override
@@ -239,5 +239,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
     };
+
+    @Override
+    public void onAspectRatioSelected(@NonNull AspectRatio ratio) {
+        if (mCameraView != null) {
+            Toast.makeText(this, ratio.toString(), Toast.LENGTH_SHORT).show();
+            mCameraView.setAspectRatio(ratio);
+        }
+    }
 
 }

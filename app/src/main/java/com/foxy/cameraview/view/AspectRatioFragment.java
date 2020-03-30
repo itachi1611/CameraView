@@ -36,10 +36,20 @@ public class AspectRatioFragment extends DialogFragment {
         return fragment;
     }
 
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mListener = (Listener) context;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        try {
+            mListener = (Listener) getActivity();
+        } catch (ClassCastException e) {
+            throw new ClassCastException(getActivity().toString() + " must be implement OnFragmentInteractionListener !");
+        }
     }
 
     @Override
